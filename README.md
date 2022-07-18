@@ -11,8 +11,10 @@ podman build . -t nmon
 
 Run directly from quay image:
 ```
-podman run -it -–privileged --pid=host --network=host -v=/tmp:/tmp:rw -t quay.io/dphillip/nmon-container:latest nmon -f /tmp/ -s1 -c 180 -t 
+export TARGET="$(hostname)-$(date "+%F:%T")"
+
+podman run -it -–privileged --pid=host --network=host -v=/tmp:/tmp:rw -t quay.io/dphillip/nmon-container:latest nmon -F /tmp/${TARGET}.nmon -s1 -c 15 -t 
 # every second for 180 seconds
 
-podman run -it -–privileged --pid=host --network=host -v=/tmp:/tmp:rw -t quay.io/dphillip/nmon-container nmonchart /tmp/deployhost_220706_0155.nmon
+podman run -it -–privileged --pid=host --network=host -v=/tmp:/tmp:rw -t quay.io/dphillip/nmon-container nmonchart /tmp/${TARGET}.nmon
 ``
